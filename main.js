@@ -85,7 +85,7 @@ ART = function() {
     }
     this.removePagetransition = function() {
         document.body.classList.add('loaded');
-        let pageTransitionElement = document.getElementById('pagetransition');
+        let pageTransitionElement = document.getElementById('pageTransition');
         setTimeout(function() {
             pageTransitionElement.classList.add('closed');
         }, 20);
@@ -134,25 +134,25 @@ Home = function() {
     this.resize = function() {
         if ($('#home').length) {
             if ($(window).width() <= self.responsiveWidth2) {
-                $('.bottommask').css('height', $(window).height() * 0.25 - 30);
-                $('.topmask').css('height', $(window).height() * 0.25 - 22);
-                $('.bottommask').css({
+                $('.bottomMask').css('height', $(window).height() * 0.25 - 30);
+                $('.topMask').css('height', $(window).height() * 0.25 - 22);
+                $('.bottomMask').css({
                     'top': (($(window).height() * 0.25) + 30) + 'px'
                 });
                 $('#home .thumbnails').css({
                     'height': ($(window).height()) + 'px',
                 });
             } else if ($(window).width() <= self.responsiveWidth) {
-                $('.bottommask').css('height', $(window).height() * 0.25 - 35);
-                $('.topmask').css('height', $(window).height() * 0.25 - 26);
-                $('.bottommask').css({
+                $('.bottomMask').css('height', $(window).height() * 0.25 - 35);
+                $('.topMask').css('height', $(window).height() * 0.25 - 26);
+                $('.bottomMask').css({
                     'top': (($(window).height() * 0.25) + 35) + 'px'
                 });
                 $('#home .thumbnails').css({
                     'height': ($(window).height()) + 'px',
                 });
             } else {
-                $('.topmask, .bottommask, .gradientmask, #home .thumbnails').attr('style', '');
+                $('.topMask, .bottomMask, .gradientMask, #home .thumbnails').attr('style', '');
             }
             self.thumbnailsHeight = $('.thumbnails .inner').outerHeight();
             self.thumbnailsSectionHeight = self.thumbnailsHeight / self.thumbnailsSectionNumber;
@@ -191,12 +191,13 @@ Home = function() {
                 '-webkit-transform': 'translate3d(0px, -' + position + 'px, 0px)'
             });
         }
-        $('.projecttitle').removeClass('hovering');
+        $('.projectTitle').removeClass('hovering');
     }
     this.sliderPosition = function(index, transitionTime = 0) {
         var initialPosition = self.thumbnailsSectionHeight * 2;
-        var thumbnail = $('#projectthumbnail_2_' + index);
-        var initialPosition = thumbnail.position().top - ($(window).height() - thumbnail.height()) / 2;
+        var thumbnail = $('#projectThumbnail_2_' + index);
+        //var initialPosition = thumbnail.position().top - ($(window).height() - thumbnail.height()) / 2;
+        console.log(initialPosition);
         if ($(window).width() <= self.responsiveWidth) {
             initialPosition = thumbnail.position().top - $(window).height() * 0.5;
         }
@@ -247,26 +248,26 @@ Home = function() {
                 self.updateThumbnailsPositions();
             });
         }
-        $('.topmask, .bottommask').mouseenter(function() {
+        $('.topMask, .bottomMask').mouseenter(function() {
             $('#cursor').addClass('action');
             $('#cursor span').removeClass('show');
             $('#cursor span.scroll').addClass('show');
         });
-        $('.projectthumbnail').mouseenter(function() {
+        $('.projectThumbnail').mouseenter(function() {
             $('#cursor').addClass('action');
             $('#cursor span').removeClass('show');
             $('#cursor span.click').addClass('show');
         });
-        $('#home, .projectthumbnail, .topmask, .bottommask').mouseleave(function() {
+        $('#home, .projectThumbnail, .topMask, .bottomMask').mouseleave(function() {
             $('#cursor').removeClass('action');
             $('#cursor span').removeClass('show');
         });
-        $('.projecttitle, .projectthumbnail').click(function() {
+        $('.projectTitle, .projectThumbnail').click(function() {
             var id = $(this).data('id');
             var group = $(this).data('group');
             var index = $(this).data('index');
             sessionStorage.lastProjectClicked = index;
-            if ($(this).is('.projecttitle.hovering') || $(this).hasClass('projectthumbnail')) {
+            if ($(this).is('.projectTitle.hovering') || $(this).hasClass('projectThumbnail')) {
                 $('body').addClass('project-loading');
                 $(this).addClass('clicked');
             } else {
@@ -274,10 +275,10 @@ Home = function() {
             }
         });
         if (!art.isTouchDevice()) {
-            $('.projectthumbnail.video').mouseenter(function() {
+            $('.projectThumbnail.video').mouseenter(function() {
                 $('video', this)[0].play();
             });
-            $('.projectthumbnail.video').mouseleave(function() {
+            $('.projectThumbnail.video').mouseleave(function() {
                 $('video', this)[0].pause();
             });
         }
@@ -287,7 +288,7 @@ Home = function() {
         self.lastScrollUpdate = setTimeout(function() {
             var scroll = $('.thumbnails').scrollTop();
             var positions = [];
-            $('.projectthumbnail').each(function() {
+            $('.projectThumbnail').each(function() {
                 if ($(window).width() <= self.responsiveWidth) {
                     positions.push({
                         position: $(this).position().top,
@@ -325,7 +326,7 @@ Home = function() {
                 complete: function() {
                     var group = closestThumbnail.data('group');
                     var index = closestThumbnail.data('index');
-                    $('.projecttitle[data-group="' + group + '"][data-index="' + index + '"]').addClass('hovering');
+                    $('.projectTitle[data-group="' + group + '"][data-index="' + index + '"]').addClass('hovering');
                     sessionStorage.lastProjectClicked = index;
                     $('body').removeClass('scrolling');
                 }
